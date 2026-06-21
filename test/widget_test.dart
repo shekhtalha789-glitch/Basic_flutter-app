@@ -1,9 +1,4 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// Week 1 widget tests for the login screen: form validation + navigation.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,20 +6,43 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intern_tasks/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('shows validation errors for empty email and password',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const InternTasksApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Tap Login without entering anything.
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Login'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Please enter your email'), findsOneWidget);
+    expect(find.text('Password cannot be empty'), findsOneWidget);
+  });
+
+  testWidgets('rejects a malformed email', (WidgetTester tester) async {
+    await tester.pumpWidget(const InternTasksApp());
+
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Email'), 'not-an-email');
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Password'), 'secret');
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Login'));
+    await tester.pump();
+
+    expect(find.text('Enter a valid email address'), findsOneWidget);
+  });
+
+  testWidgets('navigates to home on valid credentials',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const InternTasksApp());
+
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Email'), 'user@example.com');
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Password'), 'secret');
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Login'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Login successful'), findsOneWidget);
+    expect(find.text('Signed in as user@example.com'), findsOneWidget);
   });
 }
