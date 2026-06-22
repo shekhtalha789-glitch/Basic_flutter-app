@@ -42,7 +42,9 @@ void main() {
     await tester.tap(find.widgetWithText(ElevatedButton, 'Login'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Login successful'), findsOneWidget);
+    // Lands on the hub, which greets the user and lists the feature screens.
     expect(find.text('Signed in as user@example.com'), findsOneWidget);
+    expect(find.text('Counter'), findsOneWidget);
+    expect(find.text('To-Do List'), findsOneWidget);
   });
 }

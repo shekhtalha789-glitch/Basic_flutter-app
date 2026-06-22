@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-/// Week 1 — the second screen reached from the login screen.
+import 'counter_screen.dart';
+import 'todo_screen.dart';
+
+/// The app "hub", reached from the login screen.
 ///
-/// This is the app "hub". In later weeks it gains buttons that navigate to the
-/// Counter, To-Do and Task Manager features. For Week 1 it simply confirms that
-/// navigation from the login screen works.
+/// Week 1 confirmed navigation works. From Week 2 on, this screen is the launch
+/// pad for each feature built during the internship: Counter, To-Do and (later)
+/// the Task Manager.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, required this.email});
 
@@ -25,33 +28,61 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.check_circle_outline,
-                  size: 72, color: Colors.green),
-              const SizedBox(height: 16),
-              Text(
-                'Login successful',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Signed in as $email',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                'Counter, To-Do and Task Manager features '
-                'are added in the next weeks.',
-                textAlign: TextAlign.center,
-              ),
-            ],
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text(
+            'Signed in as $email',
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-        ),
+          const SizedBox(height: 16),
+          _FeatureCard(
+            icon: Icons.exposure,
+            title: 'Counter',
+            subtitle: 'Week 2 — setState + persistent storage',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const CounterScreen()),
+            ),
+          ),
+          _FeatureCard(
+            icon: Icons.checklist,
+            title: 'To-Do List',
+            subtitle: 'Week 2 — add tasks, ListView, persistent storage',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const TodoScreen()),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A tappable card linking to one feature screen on the hub.
+class _FeatureCard extends StatelessWidget {
+  const _FeatureCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(icon, size: 32),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: onTap,
       ),
     );
   }
