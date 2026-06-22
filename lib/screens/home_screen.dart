@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'counter_screen.dart';
+import 'task_manager_screen.dart';
 import 'todo_screen.dart';
 
 /// The app "hub", reached from the login screen.
@@ -52,6 +53,15 @@ class HomeScreen extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const TodoScreen()),
+            ),
+          ),
+          _FeatureCard(
+            icon: Icons.task_alt,
+            title: 'Task Manager',
+            subtitle: 'Week 3 — add, complete, delete; persistent storage',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const TaskManagerScreen()),
             ),
           ),
         ],

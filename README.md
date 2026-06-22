@@ -34,10 +34,12 @@ lib/
     home_screen.dart        # the hub reached after login
     counter_screen.dart     # Week 2 — counter (setState + persistence)
     todo_screen.dart        # Week 2 — to-do list (ListView + persistence)
+    task_manager_screen.dart # Week 3 — task manager (add/complete/delete + persistence)
 test/
   widget_test.dart          # login validation + navigation tests
   counter_screen_test.dart  # counter increment/decrement/reset + persistence
   todo_screen_test.dart     # to-do add/delete + persistence
+  task_manager_screen_test.dart # task add/complete/delete + persistence
 ```
 
 ---
@@ -86,3 +88,28 @@ What's implemented:
   and navigates to it with `Navigator.push()`.
 - Widget tests cover counter increment/decrement/reset and persistence, and
   to-do add/delete/empty-state and persistence (`SharedPreferences` mocked).
+
+---
+
+## Week 3 — Finishing Touches & Final Project
+
+**Goal:** combine the concepts into a small functional **Task Management** app.
+Reached from the home hub.
+
+What's implemented (`task_manager_screen.dart`):
+
+- **Task list** — tasks shown in a `ListView` with a "_N of M remaining_"
+  summary.
+- **Add** — via a dialog opened from **both** a custom `AppBar` action button
+  and a `FloatingActionButton` (both use `Icons.add`).
+- **Mark complete** — a `CheckboxListTile`; completed tasks are struck through.
+- **Delete** — swipe a row or tap the trash icon.
+- **Persistence** — the full list (title + done state) is encoded as JSON and
+  saved to `SharedPreferences` (key `task_manager_tasks`), restored on restart.
+- Widget tests cover add, complete, delete, empty state, and load/persist
+  (`SharedPreferences` mocked).
+
+### Demo video
+
+The final deliverable also asks for a short screen-recording demonstrating the
+app — record this from a running device/emulator and link it here.
