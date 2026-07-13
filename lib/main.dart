@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'screens/login_screen.dart';
 
+import 'package:provider/provider.dart';
+import 'providers/task_provider.dart';
+
 void main() {
-  runApp(const InternTasksApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => TaskProvider(),
+      child: const InternTasksApp(),
+    ),
+  );
 }
 
 /// Root of the app.

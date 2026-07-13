@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'counter_screen.dart';
 import 'task_manager_screen.dart';
 import 'todo_screen.dart';
+import 'posts_list_screen.dart';
+import 'user_profile_screen.dart';
+import 'users_list_screen.dart';
 
 /// The app "hub", reached from the login screen.
 ///
@@ -62,6 +65,34 @@ class HomeScreen extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const TaskManagerScreen()),
+            ),
+          ),
+          _FeatureCard(
+            icon: Icons.list_alt,
+            title: 'Posts (Week 4)',
+            subtitle: 'API Integration, ListView.builder, state handling',
+            onTap: () => Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const PostsListScreen(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+              ),
+            ),
+          ),
+          _FeatureCard(
+            icon: Icons.people,
+            title: 'Users List',
+            subtitle: 'API Integration, List of Users',
+            onTap: () => Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const UsersListScreen(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+              ),
             ),
           ),
         ],
